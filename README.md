@@ -8,7 +8,7 @@ IMPORTANT NOTES (In case Backend Service API Integration is required):
     3. In order to start the server in your local system, please run one of the below commands based on your Operating system:http://localhost:3000/api/quiz/all
         - Windows (cmd.exe): set "REACT_APP_API_URL=<endpoint URL>" && npm start
         - Windows (Powershell): ($env:REACT_APP_API_URL = "<endpoint URL>") -and (npm start)
-        - Linux, macOS (bash): REACT_APP_API_URL=<endpoint URL> npm start
+        - Linux, macOS (bash): REACT_APP_API_URL=http://34.234.76.109:4060 npm start
 
 yarn global add serve
 PROJECT BUILD STEPS (Make sure that your project is getting built successfully):
