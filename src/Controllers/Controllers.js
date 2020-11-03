@@ -13,7 +13,8 @@ class Controllers {
 
     getAllquizes = async ()=>
     { 
-        return await axios.get(`${this.backendUrl}/api/quiz/all`,{headers:this.headers}).then((res)=>{ return res.data });
+        
+        return await axios.get(`${this.backendUrl}/api/quiz/all`,{headers:this.headers}).then((res)=>{ console.log(res.data);return res.data });
         
     }
 

@@ -16,7 +16,7 @@ function App() {
 
    
   return (
-    <div style={{backgroundColor:'#d6ddf5',height:'100vh'}} className="App">
+    <div style={{backgroundColor:'#d6ddf5'}} className="App">
 
       <Router>
       <Switch>

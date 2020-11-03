@@ -1,6 +1,9 @@
 import React, { useState,useEffect } from 'react'
 import { withRouter, RouteComponentProps } from "react-router";
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 import Controllers from '../../Controllers/Controllers';
+import ReportComp from './ReportComp';
 
 
 
@@ -8,7 +11,7 @@ function QuizComp(props) {
   //  console.log("query", props.match.params.id);
     var [qObj, setqObj] = useState({})
     var [qindex, setqindex] = useState(0);
-    var [ansObj, setansObj] = useState({quiz_id:props.match.params.id,mappings:[]});
+    var [ansObj, setansObj] = useState({quiz_id:parseInt(props.match.params.id),mappings:[]});
     var [report,setreport] = useState({});
    // var [isChecked,setIschecked] = isChecked()
     const {initialSeconds = 15} = props;
@@ -18,7 +21,7 @@ function QuizComp(props) {
     if (Object.keys(qObj).length == 0) {
         control.getspecificquizes(props.match.params.id).then((res) => {
             setqObj(res);
-          // console.log(res)
+           console.log(res)
         }
 
         )
@@ -81,7 +84,7 @@ function QuizComp(props) {
                     <h1 style={{ margin: '0', color: 'white' }}>{qObj.name}</h1>
                 </div>
                 <div style={{height:'10vh' , margin :'5vh'}} id='Timer'>
-                    <div></div>
+                    <div><Progress percent={(seconds/15)*100} status={'active'}  /></div>
         <div className='time-bar' style={{backgroundColor: 'white',textAlign:'left'}}>Time Remaining : {seconds > 9 ? "0:"+seconds : '0:0'+seconds}  / 0:15 seconds</div>
                 </div>
                 <div >
@@ -90,7 +93,7 @@ function QuizComp(props) {
                         {
                             qObj.questions[qindex].options.split(',').map((q, i) => (
                                 <div style={{  height:'5vh', backgroundColor: 'white', margin: '1vh 10vh' }}>
-                                    <div style={{ backgroundColor:'#00ccff', height:'5vh', width: '10vh', float: 'left' }}> <input onChange={(e)=>{e.preventDefault()}} checked={false} onClick={(e) => { addAnswer(e.target.value) }} value={q+"#"+(i+1)} type='radio' /> 
+                                    <div style={{ backgroundColor:'#00ccff', height:'5vh', width: '10vh', float: 'left' }}> <input onChange={(e)=>{e.preventDefault();}}  onClick={(e) => { addAnswer(e.target.value) }} value={q+"#"+(i+1)} type='radio' /> 
                                     </div> <div style={{ padding:'1vh', textAlign:'left',width: '70vh', float: 'left' }} className={'answer-value-' + (i + 1)}>{q}</div>
                                 </div>
                             ))
@@ -107,7 +110,7 @@ function QuizComp(props) {
     
     if(Object.keys(report).length !== 0) {
         
-        return (JSON.stringify(report));
+        return  <ReportComp reportData ={report} questions={qObj.questions} quizname = {qObj.name}/> 
     }
 
     return null;
