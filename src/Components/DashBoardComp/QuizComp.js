@@ -13,7 +13,7 @@ function QuizComp(props) {
     var [qindex, setqindex] = useState(0);
     var [ansObj, setansObj] = useState({quiz_id:parseInt(props.match.params.id),mappings:[]});
     var [report,setreport] = useState({});
-   // var [isChecked,setIschecked] = isChecked()
+
     const {initialSeconds = 15} = props;
     const [seconds, setSeconds ] =  useState(initialSeconds);
     var control = new Controllers();
@@ -30,7 +30,10 @@ function QuizComp(props) {
     function addAnswer(andId){
        
         var ans = ansObj;
-        ans.mappings.push({ques_id:qindex+1,submitted_option:andId.split('#')[0]})
+        ans.mappings.push({
+            ques_id:andId.split('#')[1],
+            submitted_option:andId.split('#')[0]
+        })
         
          setSeconds(15);
         setqindex(qindex+1)
@@ -59,7 +62,7 @@ function QuizComp(props) {
             if(qindex == qObj.questions.length){
           
                 clearInterval(myInterval);
-                control.getquizscore(ansObj).then(w => setreport(w));
+                    control.getquizscore(ansObj).then(w => setreport(w));
                // console.log('its over');
                // setqObj({});
             }
@@ -74,7 +77,7 @@ function QuizComp(props) {
 //Please note that you can submit the solution multiple times.
 
     if (Object.keys(qObj).length !== 0 && qObj.questions.length > qindex ){
-       //  console.log(qObj.questions[qindex].length > qindex)
+       //  console.log(qObj.questions[qindex].length > qindex)REACT_APP_API_URL=http://54.163.18.38:4060 npm start
        // console.log(qObj.questions[qindex].options.split(','))
         return (
 
@@ -93,8 +96,13 @@ function QuizComp(props) {
                         {
                             qObj.questions[qindex].options.split(',').map((q, i) => (
                                 <div style={{  height:'5vh', backgroundColor: 'white', margin: '1vh 10vh' }}>
-                                    <div style={{ backgroundColor:'#00ccff', height:'5vh', width: '10vh', float: 'left' }}> <input onChange={(e)=>{e.preventDefault();}}  onClick={(e) => { addAnswer(e.target.value) }} value={q+"#"+(i+1)} type='radio' /> 
-                                    </div> <div style={{ padding:'1vh', textAlign:'left',width: '70vh', float: 'left' }} className={'answer-value-' + (i + 1)}>{q}</div>
+                                    <div style={{ backgroundColor:'#00ccff', height:'5vh', width: '10vh', float: 'left' }}> 
+                                    <input checked={false} 
+                                             onClick={(e) => { addAnswer(e.target.value) }} value={q+"#"+(qObj.questions[qindex].id)} 
+                                             type='radio' 
+                                             /> 
+                                    </div> 
+                                    <div style={{ padding:'1vh', textAlign:'left',width: '70vh', float: 'left' }} className={'answer-value-' + (i + 1)}>{q}</div>
                                 </div>
                             ))
                         }
