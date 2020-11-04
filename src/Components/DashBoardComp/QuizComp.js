@@ -97,12 +97,12 @@ function QuizComp(props) {
                             qObj.questions[qindex].options.split(',').map((q, i) => (
                                 <div style={{  height:'5vh', backgroundColor: 'white', margin: '1vh 10vh' }}>
                                     <div style={{ backgroundColor:'#00ccff', height:'5vh', width: '10vh', float: 'left' }}> 
-                                    <input checked={false} 
+                                    <input checked={false} className={'answer-value-' + (i + 1)}
                                              onClick={(e) => { addAnswer(e.target.value) }} value={q+"#"+(qObj.questions[qindex].id)} 
                                              type='radio' 
                                              /> 
                                     </div> 
-                                    <div style={{ padding:'1vh', textAlign:'left',width: '70vh', float: 'left' }} className={'answer-value-' + (i + 1)}>{q}</div>
+                                    <div style={{ padding:'1vh', textAlign:'left',width: '70vh', float: 'left' }} >{q}</div>
                                 </div>
                             ))
                         }
